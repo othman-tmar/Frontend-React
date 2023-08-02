@@ -1,7 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import {
-fetchSCategories, addSCategorie, deleteSCategorie, editSCategorie, fetchSCategorieById
-} from "../services/ScategorieService"
+import {fetchSCategories, addSCategorie, deleteSCategorie, editSCategorie, fetchSCategorieById} from "../services/ScategorieService"
 export const getScategories = createAsyncThunk(
     "scategorie/getScategories",
     async (_, thunkAPI) => {

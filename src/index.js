@@ -5,14 +5,25 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import store from './redux/store';
-import { Provider } from 'react-redux' ;
+import { Provider } from 'react-redux';
+import { persistStore,} from 'redux-persist'
+import { PersistGate } from 'redux-persist/integration/react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { Route } from 'react-router-dom';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
+let persistor = persistStore(store)
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-            <App />
+      <PersistGate loading={null} persistor={persistor}>
+
+        <App /> 
+
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );

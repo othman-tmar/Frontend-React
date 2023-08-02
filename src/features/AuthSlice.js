@@ -1,5 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import { signup, signin } from "../services/Authservice";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const MySwal = withReactContent(Swal)
 
 
 export const register = createAsyncThunk(
@@ -47,6 +50,7 @@ export const authSlice = createSlice({
         // Reducer comes here
         reset: (state) => {
             state.isLoading = false
+            state.user=null
             state.isSuccess = false
             state.isError = false
             state.errorMessage = ""
@@ -82,17 +86,29 @@ export const authSlice = createSlice({
                 state.isSuccess = true;
                 console.log(action.payload);
                 state.user = action.payload.user;
-                localStorage.setItem("CC_Token", action.payload.accessToken);
+                localStorage.setItem("CC_Token", action.payload.token);
+                localStorage.setItem("refresh_token", action.payload.refreshToken);
                 console.log(localStorage.getItem("CC_Token"))
+                MySwal.fire({
+                    icon: 'success',
+                    title: 'Connection was successful',
+                })
             })
             .addCase(login.rejected, (state, action) => {
                 state.isLoggedIn = false;
                 state.user = null;
+                MySwal.fire({
+                    icon: 'error',
+                    title: 'Connection was refused',
+                })
             })
-            .addCase(logout.fulfilled, (state, action) => {
+            /* .addCase(logout.fulfilled, (state, action) => {
                 state.isLoggedIn = false;
                 state.user = null;
-            })
+            }) */
+           
+           
+
     }
 }
 )
